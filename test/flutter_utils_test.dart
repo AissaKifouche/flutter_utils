@@ -4,7 +4,7 @@ import 'package:flutter_utils/flutter_utils.dart';
 
 void main() {
   test('formats TimeOfDay', () {
-    final TimeOfDay timeOfDay = TimeOfDay(hour: 10, minute: 30);
-    expect(Format.formatTimeOfDay(timeOfDay), "10:30");
+    final TimeOfDay timeOfDay = TimeOfDay(hour: 18, minute: 30);
+    expect(Times.formatTimeOfDay(timeOfDay), "18:30");
   });
 }
