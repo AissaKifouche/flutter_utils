@@ -53,4 +53,25 @@ class Times {
 
     return progress.clamp(0.0, 1.0);
   }
+
+  static double getNightProgress({
+    required DateTime sunset,
+    required DateTime sunrise,
+    required DateTime now,
+}){
+    if (now.isBefore(sunset)){
+      return 0;
+    }
+
+    if (now.isAfter(sunrise)){
+      return 1;
+    }
+
+    final double totalNightTime = sunrise.millisecondsSinceEpoch - sunset.millisecondsSinceEpoch.toDouble();
+    final double passedFromNight = now.millisecondsSinceEpoch - sunset.millisecondsSinceEpoch.toDouble();
+
+    final progress = passedFromNight / totalNightTime;
+    return progress.clamp(0, 1);
+  }
+
 }
