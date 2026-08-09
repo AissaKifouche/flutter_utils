@@ -17,6 +17,13 @@ class Times {
     return DateFormat(format).format(dateTime);
   }
 
+  //format the time for DateTime objects
+  static String formatTimeDateTime(DateTime dateTime) {
+    final hour = dateTime.hour.toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    return "$hour:$minute";
+  }
+
   //a function to get the sun progress
   static double getSunProgress({
     required DateTime sunrise,
