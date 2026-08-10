@@ -13,9 +13,13 @@ class LocationService {
     }
 
     if (permission == LocationPermission.deniedForever) return null;
-    return await Geolocator.getCurrentPosition(
-      locationSettings: LocationSettings(accuracy: LocationAccuracy.low),
-    );
+    try{
+      return await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(accuracy: LocationAccuracy.low, timeLimit: Duration(seconds: 5)),
+      );
+    }catch (e) {
+      return null;
+    }
   }
 
 }
