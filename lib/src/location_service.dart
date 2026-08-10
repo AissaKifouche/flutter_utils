@@ -6,21 +6,28 @@ class LocationService {
 
   static Future<Position?> getCurrentPosition() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if(!serviceEnabled) return null;
+    if (!serviceEnabled) return null;
 
     LocationPermission permission = await Geolocator.checkPermission();
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) return null;
     }
-
     if (permission == LocationPermission.deniedForever) return null;
-    try{
-      return await Geolocator.getCurrentPosition(
-        locationSettings: LocationSettings(accuracy: LocationAccuracy.low, timeLimit: Duration(seconds: 5)),
+
+    try {
+      final pos = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(accuracy: LocationAccuracy.low, timeLimit: Duration(seconds: 10)),
       );
-    }catch (e) {
-      return null;
+      return pos;
+    } catch (e) {
+      try {
+        final lastKnown = await Geolocator.getLastKnownPosition();
+        return lastKnown;
+      } catch (_) {
+        return null;
+      }
     }
   }
 
