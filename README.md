@@ -1,6 +1,6 @@
 # Flutter Utils
 
-A collection of reusable utility functions and services for Flutter applications.
+A collection of reusable utility functions, services, and widgets for Flutter applications.
 
 ## Features
 
@@ -20,7 +20,15 @@ The package currently provides:
 * Fall back to the last known location if getting the current position fails
 * Reverse geocode coordinates into a readable location name
 
-More utilities and services will be added over time.
+### `GradientText`
+
+A reusable Flutter widget for displaying text with a customizable gradient.
+
+* Supports any Flutter `Gradient`
+* Supports custom `TextStyle`
+* Works with `LinearGradient`, `RadialGradient`, and other Flutter gradient types
+
+More utilities and widgets will be added over time.
 
 ## Getting started
 
@@ -47,17 +55,17 @@ import 'package:flutter_utils/flutter_utils.dart';
 
 ### Location permissions
 
-`LocationService` uses the `geolocator` package to access the device's location and the `geocoding` package to convert coordinates into a location name.
+`LocationService` uses `geolocator` to access the device's location and `geocoding` to convert coordinates into a location name.
 
 Make sure your Flutter application has the required location permissions configured for the platforms you support.
 
-For Android, add the appropriate location permission to:
+For Android, configure the appropriate location permission in:
 
 ```text
 android/app/src/main/AndroidManifest.xml
 ```
 
-For iOS, add the appropriate location usage description to:
+For iOS, configure the appropriate location usage description in:
 
 ```text
 ios/Runner/Info.plist
@@ -128,8 +136,6 @@ final progress = Times.getSunProgress(
 print(progress); // 0.5
 ```
 
-This can be useful for sun-position indicators and daylight progress bars.
-
 #### `getNightProgress`
 
 Calculates the current progress of nighttime between sunset and sunrise.
@@ -179,7 +185,7 @@ if (position != null) {
 
 Converts latitude and longitude coordinates into a readable location name.
 
-The function tries to return the most relevant available location in this order:
+The function checks the available placemark information in this order:
 
 1. Locality
 2. Sub-administrative area
@@ -202,10 +208,42 @@ final location = await LocationService.reverseGeocode(
 print(location);
 ```
 
+### GradientText
+
+`GradientText` is a reusable widget for displaying text with a gradient.
+
+It accepts:
+
+* `text` — the text to display
+* `gradient` — the gradient applied to the text
+* `style` — an optional `TextStyle`
+
+Example:
+
+```dart
+GradientText(
+  'ACHIEVED',
+  style: const TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+  ),
+  gradient: const LinearGradient(
+    colors: [
+      Colors.white,
+      Color(0xFF80FFB3),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  ),
+)
+```
+
+You can use other Flutter gradient types as well, such as `RadialGradient` or `SweepGradient`.
+
 ## Additional information
 
-This package is maintained as a personal collection of reusable Flutter utilities and services.
+This package is maintained as a personal collection of reusable Flutter utilities, services, and widgets.
 
 The package is open source and available on GitHub. Contributions, suggestions, and bug reports are welcome.
 
-Additional utilities and services will be added as they become useful across different Flutter projects.
+Additional utilities, services, and widgets will be added as they become useful across different Flutter projects.
